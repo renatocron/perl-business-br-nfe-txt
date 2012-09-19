@@ -99,6 +99,8 @@ sub adiciona_rps {
         discriminacao => ['str', -1000],
     };
     $params{aliquota} = $params{aliquota} * 100 if $params{aliquota};
+    $params{discriminacao} =~ s/\r?\n/|/g;
+
     my $out = $self->_validate($campos , %params);
     my @ordem = qw/
         serie
@@ -131,7 +133,6 @@ sub adiciona_rps {
         $line .= $out->{$_};
     };
     $line .= "\r\n";
-    use DDP; p $out;
 
     $self->_rps_lines($self->_rps_lines . $line);
 
