@@ -28,15 +28,27 @@ has inscricao_municipal => (
 );
 
 has _total_servico => (
-    is => 'rw',
+    traits  => ['Counter'],
+    is => 'ro',
     isa => 'Num',
-    default => sub {0}
+    default => 0,
+    handles => {
+        inc_total_servico => 'inc',
+        dec_total_servico => 'dec',
+        reset_total_servico => 'reset'
+    },
 );
 
 has _total_deducao => (
-    is => 'rw',
+    traits  => ['Counter'],
+    is => 'ro',
     isa => 'Num',
-    default => sub {0}
+    default => 0,
+    handles => {
+        inc_total_deducao => 'inc',
+        dec_total_deducao => 'dec',
+        reset_total_deducao => 'reset'
+    },
 );
 
 has _rps_lines => (
@@ -46,9 +58,15 @@ has _rps_lines => (
 );
 
 has _total_linhas => (
-    is => 'rw',
-    isa => 'Int',
-    default => sub {0}
+    traits  => ['Counter'],
+    is => 'ro',
+    isa => 'Num',
+    default => 0,
+    handles => {
+        inc_total_linhas => 'inc',
+        dec_total_linhas => 'dec',
+        reset_total_linhas => 'reset'
+    },
 );
 
 sub _pad_str {
@@ -148,10 +166,10 @@ sub adiciona_rps {
 
     $self->_rps_lines($self->_rps_lines . $line);
 
-    $self->_total_deducao( $self->_total_deducao + $params{valor_deducao});
-    $self->_total_servico( $self->_total_servico + $params{valor_servico});
+    $self->inc_total_deducao( $params{valor_deducao});
+    $self->inc_total_servico( $params{valor_servico});
 
-    $self->_total_linhas($self->_total_linhas + 1);
+    $self->inc_total_linhas;
     return 1;
 }
 

@@ -97,7 +97,7 @@ $txt->adiciona_rps(
         discriminacao => '00',
 )};
 
-like($@, qr/numero com valor AAA eh um numero/, 'str no int');
+#like($@, qr/numero com valor AAA eh um numero/, 'str no int');
 
 eval {
 $txt->adiciona_rps(
