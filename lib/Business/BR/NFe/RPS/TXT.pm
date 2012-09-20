@@ -52,9 +52,14 @@ has _total_deducao => (
 );
 
 has _rps_lines => (
-    is => 'rw',
+    traits  => ['String'],
+    is => 'ro',
     isa => 'Str',
-    default => sub {''}
+    default => q{},
+    handles => {
+        add_rps_lines     => 'append',
+        replace_rps_lines => 'replace',
+    },
 );
 
 has _total_linhas => (
@@ -164,7 +169,7 @@ sub adiciona_rps {
     };
     $line .= "\r\n";
 
-    $self->_rps_lines($self->_rps_lines . $line);
+    $self->add_rps_lines($line);
 
     $self->inc_total_deducao( $params{valor_deducao});
     $self->inc_total_servico( $params{valor_servico});
