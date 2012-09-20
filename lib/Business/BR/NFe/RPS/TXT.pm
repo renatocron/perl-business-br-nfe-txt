@@ -42,7 +42,7 @@ use Carp;
         discriminacao => '00',
     );
 
-    $txt->gera_txt;
+    $txt->gerar_txt;
 
 =head1 DESCRIPTION
 
