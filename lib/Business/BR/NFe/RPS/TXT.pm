@@ -5,7 +5,15 @@ use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 use Carp;
 
-# ABSTRACT: Gerar arquivo de envio de RPS em lote baseado no sistema de nota fiscal paulistana.
+=head1 NAME
+
+=UTF8
+
+Business::BR::NFe::RPS::TXT - Gerar arquivo de envio de RPS em lote baseado no sistema de nota fiscal paulistana.
+
+
+Formato do arquivo na versao TXT 001.
+
 
 =head1 SYNOPSIS
 
@@ -50,13 +58,10 @@ O sistema da Nota Fiscal Paulistana permite que sejam transferidas informações
 
 =head1 TODO
 
-=over 4
+=for :list
+* Limitar os dados em 10MB.
+* Adicionar suporte para RPS-C = Recibo Provisório de Serviços simplificado (Cupons).
 
-=item * Limitar os dados em 10MB.
-
-=item * Adicionar suporte para RPS-C = Recibo Provisório de Serviços simplificado (Cupons).
-
-=back
 
 =cut
 
@@ -308,6 +313,9 @@ sub _formata {
 
 Retorna o conteúdo para ser gravado em um arquivo.
 
+Atenção: O arquivo deve ser salvo em ISO 8859-1,
+este modulo não modifica nenhum campo enviado além de ajustar os paddings.
+
 =cut
 
 sub gerar_txt {
@@ -340,5 +348,24 @@ sub gerar_txt {
     return $str;
 }
 
-1
+1;
+
+=head1 SUPPORT
+
+=head2 Perldoc
+
+Você pode encontrar documentação para este módulo com o comando perldoc (para ler)
+
+    perldoc Business::BR::NFe::RPS::TXT
+
+=head2 Github
+
+Se você quiser contribuir com o código, você pode fazer um fork deste módulo no github:
+
+L<https://github.com/renatoaware/perl-business-br-nfe-txt>
+
+Você também pode reportar problemas por lá!
+
+
+=cut
 
