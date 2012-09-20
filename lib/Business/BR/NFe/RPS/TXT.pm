@@ -1,18 +1,30 @@
 package Business::BR::NFe::RPS::TXT;
+
 use Moose;
+use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 use Carp;
 
+subtype 'DataRps',
+    as 'Str',
+    where { /^[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]$/ },
+    message { 'The date you provided is not for NFe::RPS' };
+
 has data_ini => (
     is => 'ro',
+    isa => 'DataRps',
+    required => 1
 );
 
 has data_fim => (
     is => 'ro',
+    isa => 'DataRps',
+    required => 1
 );
 
 has inscricao_municipal => (
     is => 'ro',
+    required => 1
 );
 
 has _total_servico => (
