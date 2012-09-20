@@ -54,6 +54,8 @@ O sistema da Nota Fiscal Paulistana permite que sejam transferidas informações
 
 =item * Limitar os dados em 10MB.
 
+=item * Adicionar suporte para RPS-C = Recibo Provisório de Serviços simplificado (Cupons).
+
 =back
 
 =cut
@@ -222,7 +224,8 @@ sub adiciona_rps {
       email
       discriminacao/;
     my $line = '2';    # registro 2 versao 001
-    $line .= _pad_str( 'RPS', 5 );
+    $line .= _pad_str( defined $params{tipo} &&
+        $params{tipo} =~ /^RPS(\-M)?$/ ? $params{tipo} : 'RPS', 5 );
 
     foreach (@ordem) {
         $line .= $out->{$_};
@@ -291,7 +294,7 @@ sub _formata {
         }
         elsif ( $ref->[0] eq 'date' ) {
             if ( $params{$campo} !~ /^\d{4}\d{2}\d{2}$/ ) {
-                croak "The field '$campo' (date) is not AAAAMMDD";
+                croak "The field '$campo' (date) is not in format AAAAMMDD";
             }
             else {
                 $x->{$campo} = $params{$campo};
